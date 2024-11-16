@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaskManagement.Core.Models;
 
 public class TaskStatus
 {
     [Key]
-    public int Id { get; set; }
+    [Column(TypeName = "int")]
+    public Enums.TaskStatus Id { get; set; }
 
     public string Name { get; set; }
 

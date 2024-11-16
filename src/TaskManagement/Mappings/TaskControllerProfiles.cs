@@ -8,6 +8,7 @@ public class TaskControllerProfiles : Profile
 {
     public TaskControllerProfiles()
     {
-        this.CreateMap<GetTaskFullInfoDto, GetListOfAllTasksResponse>();
+        this.CreateMap<GetTaskFullInfoDto, GetListOfAllTasksResponse>()
+            .ForMember(dest => dest.StatusId, opt => opt.MapFrom(src => (int)src.Status));
     }
 }

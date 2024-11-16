@@ -346,10 +346,9 @@ healthchecksdb
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 
-# Ionide (cross platform F# VS Code tools) working folder
-.ionide/
-/IdentityService/Properties/ServiceDependencies/sm-identityservice - Web Deploy/profile.arm.json
-
 profile.arm.json
 
 launchSettings.json
+
+#Migrations
+src/TaskManagement.Data/Migrations/

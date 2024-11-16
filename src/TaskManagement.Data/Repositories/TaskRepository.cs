@@ -20,7 +20,7 @@ public class TaskRepository : RepositoryBase<Core.Models.Task>, ITaskRepository
                 Id = t.Id,
                 Name = t.Name,
                 Description = t.Description,
-                StatusId = t.TaskStatus.Id,
+                Status = t.Status,
                 StatusName = t.TaskStatus.Name,
                 AssignedTo = t.AssignedTo,
             })

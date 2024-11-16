@@ -26,9 +26,9 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Core.Models.TaskStatus>().HasData(
-            new Core.Models.TaskStatus { Id = 1, Name = "Not Started", Description = "The task has not yet been started." },
-            new Core.Models.TaskStatus { Id = 2, Name = "In Progress", Description = "The task is currently in progress." },
-            new Core.Models.TaskStatus { Id = 3, Name = "Completed", Description = "The task has been completed." });
+            new Core.Models.TaskStatus { Id = Core.Enums.TaskStatus.NotStarted, Name = "Not Started", Description = "The task has not yet been started." },
+            new Core.Models.TaskStatus { Id = Core.Enums.TaskStatus.InProgress, Name = "In Progress", Description = "The task is currently in progress." },
+            new Core.Models.TaskStatus { Id = Core.Enums.TaskStatus.Completed, Name = "Completed", Description = "The task has been completed." });
     }
 
     #endregion

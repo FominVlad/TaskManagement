@@ -8,7 +8,7 @@ public class GetTaskFullInfoDto
 
     public string Description { get; set; }
 
-    public int StatusId { get; set; }
+    public Enums.TaskStatus Status { get; set; }
 
     public string StatusName { get; set; }
 
