@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using TaskManagement;
 using TaskManagement.BL;
 using TaskManagement.Data;
+using TaskManagement.ServiceBus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,8 @@ builder.Services.AddRepositories();
 builder.Services.AddServices();
 
 builder.Services.AddFilters();
+
+builder.Services.AddServiceBus();
 
 var app = builder.Build();
 

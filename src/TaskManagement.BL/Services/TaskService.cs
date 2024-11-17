@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using TaskManagement.Core.DTO;
 using TaskManagement.Core.Exceptions;
 using TaskManagement.Core.Interfaces;
@@ -15,6 +16,7 @@ public class TaskService : ITaskService
     private readonly IUnitOfWork unitOfWork;
     private readonly IConfiguration configuration;
     private readonly ILogger<TaskService> logger;
+    private readonly IServiceBusService serviceBusService;
 
     #endregion
 
@@ -24,12 +26,14 @@ public class TaskService : ITaskService
         IValidator validator,
         IUnitOfWork unitOfWork,
         IConfiguration configuration,
-        ILogger<TaskService> logger)
+        ILogger<TaskService> logger,
+        IServiceBusService serviceBusService)
     {
         this.validator = validator;
         this.unitOfWork = unitOfWork;
         this.configuration = configuration;
         this.logger = logger;
+        this.serviceBusService = serviceBusService;
     }
 
     #endregion
@@ -55,6 +59,18 @@ public class TaskService : ITaskService
         this.unitOfWork.Save();
 
         this.logger.LogInformation($"New Task \"{task.Name}\" was created (TaskID: {task.Id}).");
+
+        string serviceBusQueueName = this.configuration.GetValue<string>("ServiceBus:TaskManagerQueueName");
+        string serviceBusMessageBody = JsonConvert.SerializeObject(new TaskProcessingDto
+        {
+            Id = task.Id,
+            Status = task.Status,
+        });
+
+        await this.serviceBusService.SendMessageAsync(
+            serviceBusQueueName,
+            serviceBusMessageBody,
+            retryAllowed: true);
 
         return task;
     }
