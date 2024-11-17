@@ -13,7 +13,7 @@ public static class DependencyInjection
             .Where(t => !t.IsInterface && !t.IsGenericType && !t.IsAbstract)
             .Select(t => new { Type = t, Interfaces = t.GetInterfaces().Where(i => !i.IsGenericType) })
             .Where(x => x.Type.Namespace != null &&
-                        x.Type.Namespace.Equals("WebApp.BL.Services") &&
+                        x.Type.Namespace.Equals("TaskManagement.BL.Services") &&
                         x.Type.Name.EndsWith("Service")))
         {
             foreach (Type i in x.Interfaces)

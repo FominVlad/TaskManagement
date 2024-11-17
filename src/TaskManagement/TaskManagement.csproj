@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="DataAnnotationsExtensions" Version="5.0.1.27" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -30,10 +31,6 @@
     <ProjectReference Include="..\TaskManagement.BL\TaskManagement.BL.csproj" />
     <ProjectReference Include="..\TaskManagement.Core\TaskManagement.Core.csproj" />
     <ProjectReference Include="..\TaskManagement.Data\TaskManagement.Data.csproj" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Models\TaskController\RequestModels\" />
   </ItemGroup>
 
 </Project>

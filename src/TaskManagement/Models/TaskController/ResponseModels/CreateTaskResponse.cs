@@ -1,6 +1,6 @@
 ﻿namespace TaskManagement.Models.TaskController.ResponseModels;
 
-public class GetListOfAllTasksResponse
+public class CreateTaskResponse
 {
     public int Id { get; set; }
 
@@ -8,9 +8,7 @@ public class GetListOfAllTasksResponse
 
     public string Description { get; set; }
 
-    public Core.Enums.TaskStatus Status { get; set; }
-
-    public string StatusName { get; set; }
+    public int Status { get; set; }
 
     public string? AssignedTo { get; set; }
 }
