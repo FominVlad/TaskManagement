@@ -2,5 +2,5 @@
 
 public interface IServiceBusService
 {
-    Task SendMessageAsync(string queueName, string messageBody, bool retryAllowed);
+    Task SendMessageAsync(string queueName, string messageBody);
 }

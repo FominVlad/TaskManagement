@@ -31,8 +31,7 @@ public class ServiceBusService : IServiceBusService
 
     public async Task SendMessageAsync(
         string queueName,
-        string messageBody,
-        bool retryAllowed)
+        string messageBody)
     {
         string connectionString = this.configuration.GetValue<string>("ServiceBus:ConnectionString");
 
@@ -41,24 +40,7 @@ public class ServiceBusService : IServiceBusService
             .CheckStringIsNotNullOrWhiteSpace(messageBody, nameof(messageBody))
             .CheckStringIsNotNullOrWhiteSpace(connectionString, nameof(connectionString));
 
-        RetryPolicy retryPolicy = null;
-
-        if (retryAllowed)
-        {
-            int maxRetryCount = this.configuration.GetValue<int>("ServiceBus:MaxRetryCount");
-            int minBackoffSeconds = this.configuration.GetValue<int>("ServiceBus:MinimumBackoffSeconds");
-            int maxBackoffSeconds = this.configuration.GetValue<int>("ServiceBus:MaximumBackoffSeconds");
-            int deltaBackoffSeconds = this.configuration.GetValue<int>("ServiceBus:DeltaBackoffSeconds");
-
-            retryPolicy = new RetryExponential(
-                maxRetryCount: maxRetryCount,
-                minimumBackoff: TimeSpan.FromSeconds(minBackoffSeconds),
-                maximumBackoff: TimeSpan.FromSeconds(maxBackoffSeconds),
-                deltaBackoff: TimeSpan.FromSeconds(deltaBackoffSeconds)
-            );
-        }
-
-        IQueueClient client = new QueueClient(connectionString, queueName, retryPolicy: retryPolicy);
+        IQueueClient client = new QueueClient(connectionString, queueName);
 
         Message message = new Message(Encoding.UTF8.GetBytes(messageBody))
         {

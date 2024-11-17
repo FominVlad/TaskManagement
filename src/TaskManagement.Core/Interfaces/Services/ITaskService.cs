@@ -9,4 +9,6 @@ public interface ITaskService
     Task UpdateTaskStatus(UpdateTaskStatusDto updateTaskStatusDto);
 
     Task<List<GetTaskFullInfoDto>> GetAllTasksFullInfo();
+
+    Task ProcessTask(TaskProcessingDto taskProcessingDto);
 }

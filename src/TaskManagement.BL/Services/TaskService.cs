@@ -67,10 +67,7 @@ public class TaskService : ITaskService
             Status = task.Status,
         });
 
-        await this.serviceBusService.SendMessageAsync(
-            serviceBusQueueName,
-            serviceBusMessageBody,
-            retryAllowed: true);
+        await this.serviceBusService.SendMessageAsync(serviceBusQueueName, serviceBusMessageBody);
 
         return task;
     }
@@ -98,6 +95,31 @@ public class TaskService : ITaskService
     public async Task<List<GetTaskFullInfoDto>> GetAllTasksFullInfo()
     {
         return await this.unitOfWork.TaskRepository.GetAllTasksFullInfo();
+    }
+
+    public async Task ProcessTask(TaskProcessingDto taskProcessingDto)
+    {
+        this.validator
+            .CheckObjectIsNotNull(taskProcessingDto, nameof(taskProcessingDto))
+            .CheckNumberIsNotZeroOrNegative(taskProcessingDto.Id, nameof(taskProcessingDto.Id));
+
+        this.logger.LogInformation($"Processing of Task ID = {taskProcessingDto.Id}.");
+
+        UpdateTaskStatusDto updateTaskStatusDto = new UpdateTaskStatusDto
+        {
+            TaskId = taskProcessingDto.Id,
+            Status = Core.Enums.TaskStatus.InProgress,
+        };
+
+        await this.UpdateTaskStatus(updateTaskStatusDto);
+
+        // To imitate some processing
+        Thread.Sleep(5000);
+
+        updateTaskStatusDto.Status = Core.Enums.TaskStatus.Completed;
+        await this.UpdateTaskStatus(updateTaskStatusDto);
+
+        this.logger.LogInformation($"Completed processing of Task ID = {taskProcessingDto.Id}.");
     }
 
     #endregion
